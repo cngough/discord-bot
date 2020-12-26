@@ -53,11 +53,11 @@ async def uptime(ctx):
 
 @client.command()
 async def commands(ctx):
-    await ctx.send(commands_text)
+    await ctx.send(config.commands)
 
 @client.command()
 async def changelog(ctx):
-    await ctx.send(changelogtext)
+    await ctx.send(config.changelog)
 
 @client.command()
 async def fuck(ctx, *args):
@@ -81,12 +81,12 @@ async def fuck(ctx, *args):
 
 @client.command()
 async def dazzyboo(ctx):
-    await ctx.send(dazzyRant)
-    await ctx.send(dazzyRant2)
+    await ctx.send(config.dazzy_rant)
+    await ctx.send(config.dazzy_rant_2)
 
 @client.command()
 async def serious(ctx):
-    await ctx.send(seriousRant)
+    await ctx.send(config.serious_rant)
 
 async def info(ctx, *args):
     member_to_check = ' '.join(args)
@@ -121,7 +121,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             data = data['entries'][0]
 
         filename = data['url'] if stream else ytdl.prepare_filename(data)
-        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+        return cls(discord.FFmpegPCMAudio(filename, **config.ffmpeg_options), data=data)
 
 @client.command()
 async def stream(ctx, *, url):
