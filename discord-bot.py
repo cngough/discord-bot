@@ -64,7 +64,6 @@ async def fuck(ctx, *args):
     member_to_check = ' '.join(args)
     global react_with_fuck
     for member in ctx.message.guild.members:
-        # print('[DEBUG]' + member.name)
         if (member.name.lower() == member_to_check.lower() or (member.nick != None and member.nick.lower() == member_to_check.lower())):
             await ctx.send('That\'s right, fuck ' + member.name)
             react_with_fuck = member.name
@@ -125,8 +124,10 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
 @client.command()
 async def stream(ctx, *, url):
-    # url = "https://www.youtube.com/watch?v=oHg5SJYRHA0"
-    # =ZcBNxuKZyN4
+    if url == None:
+        await ctx.send("Format is !stream <url>")
+        return 
+
     url = "https://www.youtube.com/watch?v=" + url
     await ctx.send("Attempting to join voice channel")
     if ctx.voice_client is not None:
@@ -160,10 +161,6 @@ async def music(ctx):
             raise commands.CommandError("Author not connected to a voice channel.")
     if ctx.voice_client.is_playing():
         ctx.voice_client.stop()
-
-#source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("/projects/discord-bots/music.mp3"))
-
-#source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("http://cdn-data.motu.com/media/ethno/demo-audio/mp3/Indian-Legatos-2.mp3"))
 
     source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://terrum.co.uk/uploads/1492101903.mp3"))
 
