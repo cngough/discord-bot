@@ -25,7 +25,7 @@ react_with_fuck = None
 @client.event
 async def on_ready():
     print ('No adventure is complete without Jingle hat and Jingle feet')        
-    channel = client.get_channel(config.dev_test)
+    channel = client.get_channel(config.Discord.dev_test)
     global start_time
     start_time = datetime.datetime.now()
     await channel.send('ChairsBot started at: ' + start_time.strftime("%d/%m/%Y, %H:%M:%S"))
@@ -52,7 +52,7 @@ async def uptime(ctx):
     await ctx.send('I have been up for: ' + time_print)
 
 @client.command()
-async def commands(ctx):
+async def help(ctx):
     await ctx.send(config.commands)
 
 @client.command()
@@ -194,7 +194,7 @@ async def checkKol():
             x = x.replace('kol-', '')
             x = x.replace('.log', '')
             date_time = datetime.datetime.strptime(x, '%Y%m%d%H%M%S')
-            channel = client.get_channel(config.dev_test)
+            channel = client.get_channel(config.Discord.dev_test)
             await channel.send('KoL Cron Job successfully executed at: ' + date_time.strftime("%d/%m/%Y, %H:%M:%S"))
             os.remove(todelete)
         await asyncio.sleep(60) # task runs every 60s
@@ -203,7 +203,7 @@ async def dailyHorse():
     await client.wait_until_ready()
     print("Daily Horse has started")
     while(True):
-        channel = client.get_channel(config.daily_horse)
+        channel = client.get_channel(config.Discord.daily_horse)
         red = random.SystemRandom().randint(1, 255)
         green = random.SystemRandom().randint(1, 255)
         blue = random.SystemRandom().randint(1, 255)        

@@ -6,7 +6,8 @@ import os
 ### Version and changelog information
 version = "1.1.6"
 changelog = """Version 1.1.6
-        * Various code clean-up tasks 
+        * Various code clean-up tasks
+        * Renamed !commands to !help to stop overriding of Discord import 
 
 Version 1.1.5
         * Resolved issues with bot changing channel
@@ -50,7 +51,7 @@ Version 1.0.0
 commands = """Commands:
         * !fuck - flip the bird to anyone that annoys you
         * !info <user> - retrieves the profile information for a user
-        * !commands - provides a list of all available commands
+        * !help - provides a list of all available commands
         * !uptime - shows how long the bot has been up for
         * !dazzyboo - makes the bot have a mental breakdown
         * !serious - the serious plea
@@ -84,6 +85,7 @@ giphy_api_key = os.getenv('GIPHY_API_KEY', '')
 ### God dictionary configuration
 vocabulary = "vocab.dd"
 god_dictionary = {}
+# Loads the God dictionary into memory, currently this is 7569 words
 with open(vocabulary) as file:
     i = 1
     for line in file:
@@ -91,8 +93,9 @@ with open(vocabulary) as file:
         i = i + 1
 
 ### Discord channels
-dev_test = 514244679907147776
-daily_horse = 791301208756584469
+class Discord:
+    dev_test = 514244679907147776
+    daily_horse = 791301208756584469
 
 ### Static text fields
 dazzy_rant = 'Hello folks. Sorry for the typos lads. What an eventful fucking night that was on Discord, then wakes up to aw that this morning. Anyway, Statement. For the last 2 months me n Caitlin have been chatting a lot as ye\'s know. And we\'ve even met up a few times. As some of yous know, I liked her a lot can ye believe it? I\'d even go as far as saying we were seeing each other. At one point we both acknowledged we both wanted to be a couple. Anyway, this last week or so has been a fuckin mind game to her. I made a daft decision at the start of whatever it was we\'ve been doing. I told her I wasnae involved in something that I was and I\'ve been getting punished a fucker. She\'s been using Stephen to get back at me. You see, there\'s been patter in here about her going on a date wi Stephen and it made me a wee bit insecure. It happens. So as punishment she\'s been playing wi him and chatting wi him and completely ignoring me. Then when I ask whats going on, she says nothing and not to worry and that we\'ll be fine and the she\'s right back on wi him. This has cause the last week or so of anxiety attacks and mental fuckin breakdowns. 3 times I\'ve tried to walk away from her and 3 times she\'s phoned me. Once to tell me I\'m an idiot and I\'m over thinking things. Once to tell me to stop playing games with folk without her (especially butters) and once because one of these cunts told her. I told them about us. I\'m no mad though. What I am mad about is the phone call I got last night from her. Where she told me that I wasn\'t to speak to anyone in the discord. She told me that, for my own well being I needed a break and for that reason I wasn\'t to reach out to anyone and if I did, she\'d find out. If I played games with anyone she\'d find out. If I appeared offline with someone, she\'d find out. Meanwhile telling me it\'s cause everyone cares. I couldnae really work out what was happening. '
@@ -101,8 +104,8 @@ serious_rant = 'Hello folks. This is a serious post so i\'m asking you to please
 ### Emojis 
 class Emoji:
     middle_finger = '🖕'
-    regional_indicator_h = '🇭 '
-    regional_indicator_o = '🇴 '
-    regional_indicator_r = '🇷 '
-    regional_indicator_s = '🇸 '
-    regional_indicator_e = '🇪 '
+    regional_indicator_h = '🇭'
+    regional_indicator_o = '🇴'
+    regional_indicator_r = '🇷'
+    regional_indicator_s = '🇸'
+    regional_indicator_e = '🇪'
