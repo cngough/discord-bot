@@ -24,11 +24,11 @@ react_with_fuck = None
 
 @client.event
 async def on_ready():
-    print ('No adventure is complete without Jingle hat and Jingle feet')        
+    print (config.on_ready)        
     channel = client.get_channel(config.Discord.dev_test)
     global start_time
     start_time = datetime.datetime.now()
-    await channel.send('ChairsBot started at: ' + start_time.strftime("%d/%m/%Y, %H:%M:%S"))
+    await channel.send("ChairsBot started at: {}".format(start_time.strftime('%d/%m/%Y, %H:%M:%S')))
 
 @client.event
 async def on_message(message):
@@ -48,8 +48,8 @@ async def uptime(ctx):
     global start_time
     diff = datetime.datetime.now() - start_time
     time_diff = time.gmtime(diff.seconds)
-    time_print = time.strftime("%H:%M:%S", time_diff)
-    await ctx.send('I have been up for: ' + time_print)
+    time_print = time.strftime('%H:%M:%S', time_diff)
+    await ctx.send("I have been up for: {}".format(time_print))
 
 @client.command()
 async def help(ctx):
@@ -65,17 +65,17 @@ async def fuck(ctx, *args):
     global react_with_fuck
     for member in ctx.message.guild.members:
         if (member.name.lower() == member_to_check.lower() or (member.nick != None and member.nick.lower() == member_to_check.lower())):
-            await ctx.send('That\'s right, fuck ' + member.name)
+            await ctx.send("That's right, fuck {}".format(member.name))
             react_with_fuck = member.name
             return 
         if (member_to_check.lower() in member.name.lower() or (member.nick != None and member_to_check.lower() in member.nick.lower())):
             if member.nick == None:
-                await ctx.send('I\'m guessing you meant fuck ' + member.name + '. If you didn\'t - fuck them anyway!')
+                await ctx.send("I'm guessing you meant say fuck {}. If you didn't - fuck them anyway!".format(member.name))
             else:
-                await ctx.send('I\'m guessing you meant fuck ' + member.name + '/' + member.nick + '. If you didn\'t - fuck them anyway!')
+                await ctx.send("I'm guessing you meant say fuck {}/{}. If you didn't - fuck them anyway!".format(member.name, member.nick))
             react_with_fuck = member.name
             return 
-    await ctx.send('Who the fuck is ' + member_to_check + '?')
+    await ctx.send("Who the fuck is {}?".format(member_to_check))
     react_with_fuck = None
 
 @client.command()
@@ -128,7 +128,7 @@ async def stream(ctx, *, url):
         await ctx.send("Format is !stream <url>")
         return 
 
-    url = "https://www.youtube.com/watch?v=" + url
+    url = "https://www.youtube.com/watch?v={}".format(url)
     await ctx.send("Attempting to join voice channel")
     if ctx.voice_client is not None:
         await ctx.voice_client.move_to(ctx.author.voice.channel)
@@ -150,7 +150,6 @@ async def stream(ctx, *, url):
 async def music(ctx):
     await ctx.send("Attempting to join voice channel")
     if ctx.voice_client is not None:
-        #await ctx.voice_client.move_to(ctx.author.voice.channel)
         await ctx.voice_client.disconnect()
         await ctx.author.voice.channel.connect()
     else:
@@ -174,7 +173,7 @@ async def stop(ctx):
 @client.command()
 async def god(ctx):
     words = ""
-    for x in range(30):
+    for _ in range(30):
         # Use os.urandom() to generate secure
         godSecure = random.SystemRandom().randint(1, 7569) # 7569 lines in dictionary
         words = words + config.god_dictionary.get(godSecure).replace("\n", " ")
@@ -192,7 +191,7 @@ async def checkKol():
             x = x.replace('.log', '')
             date_time = datetime.datetime.strptime(x, '%Y%m%d%H%M%S')
             channel = client.get_channel(config.Discord.dev_test)
-            await channel.send('KoL Cron Job successfully executed at: ' + date_time.strftime("%d/%m/%Y, %H:%M:%S"))
+            await channel.send("KoL Cron Job successfully executed at: {}".format(date_time.strftime("%d/%m/%Y, %H:%M:%S")))
             os.remove(todelete)
         await asyncio.sleep(60) # task runs every 60s
 
@@ -206,10 +205,10 @@ async def dailyHorse():
         blue = random.SystemRandom().randint(1, 255)        
         embed = discord.Embed(colour=discord.Colour.from_rgb(red, green, blue))
         session = aiohttp.ClientSession()    
-        response = await session.get('https://api.giphy.com/v1/gifs/random?tag=horse&api_key=' + config.giphy_api_key)
+        response = await session.get("https://api.giphy.com/v1/gifs/random?tag=horse&api_key={}".format(config.giphy_api_key))
         data = json.loads(await response.text())
         embed.set_image(url=data['data']['images']['original']['url'])
-        await channel.send('Enjoy your daily horse GIF - \'' + data['data']['title'] + '\' brought to you by: ' + data['data']['username'])
+        await channel.send("Enjoy your daily horse GIF - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
         await channel.send(embed=embed)
         await session.close()
         await asyncio.sleep(86400) # runs every 24 hours
