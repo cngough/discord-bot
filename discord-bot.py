@@ -52,7 +52,7 @@ async def uptime(ctx):
     await ctx.send("I have been up for: {}".format(time_print))
 
 @client.command()
-async def help(ctx):
+async def actions(ctx):
     await ctx.send(config.commands)
 
 @client.command()

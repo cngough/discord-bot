@@ -51,7 +51,7 @@ Version 1.0.0
 commands = """Commands:
         * !fuck - flip the bird to anyone that annoys you
         * !info <user> - retrieves the profile information for a user
-        * !help - provides a list of all available commands
+        * !actions - provides a list of all available commands
         * !uptime - shows how long the bot has been up for
         * !dazzyboo - makes the bot have a mental breakdown
         * !serious - the serious plea
