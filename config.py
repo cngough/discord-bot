@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+import base64
 
 # Version and changelog information
 VERSION = "1.1.6"
 CHANGELOG = """Version 1.1.6
         * Various code clean-up tasks
-        * Renamed !COMMANDS to !help to stop overriding of Discord import 
+        * Renamed !commands to !help to stop overriding of Discord import 
 
 Version 1.1.5
         * Resolved issues with bot changing channel
@@ -39,23 +40,27 @@ Version 1.1.0
         * Added !changelog command
         * Added automatic cron job update in #dev-test
         * Added !uptime command
-        * Added !COMMANDS command
+        * Added !commands command
         * Renamed !getInfo command to !info
         * Improved !info formatting
 
 Version 1.0.0       
-        * First pass of info, fuck, dazzyboo and serious COMMANDS
+        * First pass of info, flip, dazzyboo and serious commands
         * Integrated Twitch API poller"""
 
 # List of COMMANDS
 COMMANDS = """COMMANDS:
-        * !fuck - flip the bird to anyone that annoys you
+        * !flip - flip the bird to anyone that annoys you
         * !info <user> - retrieves the profile information for a user
-        * !actions - provides a list of all available COMMANDS
+        * !actions - provides a list of all available commands
         * !uptime - shows how long the bot has been up for
         * !dazzyboo - makes the bot have a mental breakdown
-        * !serious - the serious plea
-        * !changelog - the changes since the last version"""
+        * !serious - prints the serious plea to the current channel
+        * !changelog - the changes since the last version
+        * !music - plays music in the channel you're in
+        * !stream <id> - streams audio from youtube to the voice channel
+        * !commands - shows a list of enterable commands
+"""
 
 # YouTube Downloader
 YTDL_FORMAT_OPTIONS = {
@@ -81,7 +86,6 @@ FFMPEG_OPTIONS = {
 DISCORD_API_KEY = os.getenv('DISCORD_API_KEY', '')
 GIPHY_API_KEY = os.getenv('GIPHY_API_KEY', '')
 
-
 # God dictionary configuration
 VOCABULARY = "vocab.dd"
 GOD_DICTIONARY = {}
@@ -91,23 +95,24 @@ with open(VOCABULARY) as file:
     for line in file:
         GOD_DICTIONARY[i] = line
         i = i + 1
-
+              
 # Discord channels
-
-
 class Discord:
     DEV_TEST = 514244679907147776
     DAILY_HORSE = 791301208756584469
 
-
 # Static text fields
 ON_READY = "No adventure is complete without Jingle hat and Jingle feet"
-DAZZY_RANT = 'Hello folks. Sorry for the typos lads. What an eventful fucking night that was on Discord, then wakes up to aw that this morning. Anyway, Statement. For the last 2 months me n Caitlin have been chatting a lot as ye\'s know. And we\'ve even met up a few times. As some of yous know, I liked her a lot can ye believe it? I\'d even go as far as saying we were seeing each other. At one point we both acknowledged we both wanted to be a couple. Anyway, this last week or so has been a fuckin mind game to her. I made a daft decision at the start of whatever it was we\'ve been doing. I told her I wasnae involved in something that I was and I\'ve been getting punished a fucker. She\'s been using Stephen to get back at me. You see, there\'s been patter in here about her going on a date wi Stephen and it made me a wee bit insecure. It happens. So as punishment she\'s been playing wi him and chatting wi him and completely ignoring me. Then when I ask whats going on, she says nothing and not to worry and that we\'ll be fine and the she\'s right back on wi him. This has cause the last week or so of anxiety attacks and mental fuckin breakdowns. 3 times I\'ve tried to walk away from her and 3 times she\'s phoned me. Once to tell me I\'m an idiot and I\'m over thinking things. Once to tell me to stop playing games with folk without her (especially butters) and once because one of these cunts told her. I told them about us. I\'m no mad though. What I am mad about is the phone call I got last night from her. Where she told me that I wasn\'t to speak to anyone in the discord. She told me that, for my own well being I needed a break and for that reason I wasn\'t to reach out to anyone and if I did, she\'d find out. If I played games with anyone she\'d find out. If I appeared offline with someone, she\'d find out. Meanwhile telling me it\'s cause everyone cares. I couldnae really work out what was happening. '
-DAZZY_RANT_2 = 'So naturally I jump up and I\'m on the discord to butters. Ignored. Then a text comes in from her asking why im messaging him. Then he messages me. Turns out folk aren\'t ignoring me cause they care it\'s because she\'s told some cunts, I don\'t know everyone, that I\'ve made all this shite up. I don\'t know how she\'s made it look either. If she\'s made me look pathetic and lonely or if I look like a psycho but I can absolutely assure yous she\'s manipulating the fuckin lot of us and she\'s loving it. I know most of yous probably don\'t care but this is what\'s happening behind the scenes. 2 folk I consider mates and have known for year, albeit I\'ve never met butters but still, have been turned against me cause they\'ve been convinced im lying about something. Have a nice day, I don\'t expect anycunt to take sides, im no a wean but it\'d be nice to have more folk in the know instead of her pretending in that discord that everythings fine and im outside feeling like shite cause wilky\'s the only cunt that wants to talk to me. She might flip this, tell yous im at it and im making shite up again. And yous might believe her cause she\'s a lassie but I can assure yous, she\'s a better liar than I am and I couldnae make something this fuckin childish and petty up if I tried. Hope to see all my gaming pals on Rainbow 6 now that I\'m free and allowed to play games myself again. God bless.'
-SERIOUS_RANT = 'Hello folks. This is a serious post so i\'m asking you to please read it. Some of yous willnae know but i was seeing someone for a wee while there. She turned out to be a psycho in the end, some folk know the details others dinnae need to. Well in the last few days i\'ve started getting death threats from random cunts. I\'ll no go into too much detail, but the wee cow has been telling folk online somewhere that i\'m a paedo. I dinnae know where, i dinnae know how many folk, i no nothing. Im wanting folk to know this cause if anyone gets a message, it\'s unlikely but if you do, please tell me, screenshot it, report it and then block them. I\'m taking any new information i get to the police. Thanks for reading. God bless'
+DAZZY_RANT = base64_to_utf8("SGVsbG8gZm9sa3MuIFNvcnJ5IGZvciB0aGUgdHlwb3MgbGFkcy4gV2hhdCBhbiBldmVudGZ1bCBmdWNraW5nIG5pZ2h0IHRoYXQgd2FzIG9uIERpc2NvcmQsIHRoZW4gd2FrZXMgdXAgdG8gYXcgdGhhdCB0aGlzIG1vcm5pbmcuIEFueXdheSwgU3RhdGVtZW50LiBGb3IgdGhlIGxhc3QgMiBtb250aHMgbWUgbiBDYWl0bGluIGhhdmUgYmVlbiBjaGF0dGluZyBhIGxvdCBhcyB5ZSdzIGtub3cuIEFuZCB3ZSd2ZSBldmVuIG1ldCB1cCBhIGZldyB0aW1lcy4gQXMgc29tZSBvZiB5b3VzIGtub3csIEkgbGlrZWQgaGVyIGEgbG90IGNhbiB5ZSBiZWxpZXZlIGl0PyBJJ2QgZXZlbiBnbyBhcyBmYXIgYXMgc2F5aW5nIHdlIHdlcmUgc2VlaW5nIGVhY2ggb3RoZXIuIEF0IG9uZSBwb2ludCB3ZSBib3RoIGFja25vd2xlZGdlZCB3ZSBib3RoIHdhbnRlZCB0byBiZSBhIGNvdXBsZS4gQW55d2F5LCB0aGlzIGxhc3Qgd2VlayBvciBzbyBoYXMgYmVlbiBhIGZ1Y2tpbiBtaW5kIGdhbWUgdG8gaGVyLiBJIG1hZGUgYSBkYWZ0IGRlY2lzaW9uIGF0IHRoZSBzdGFydCBvZiB3aGF0ZXZlciBpdCB3YXMgd2UndmUgYmVlbiBkb2luZy4gSSB0b2xkIGhlciBJIHdhc25hZSBpbnZvbHZlZCBpbiBzb21ldGhpbmcgdGhhdCBJIHdhcyBhbmQgSSd2ZSBiZWVuIGdldHRpbmcgcHVuaXNoZWQgYSBmdWNrZXIuIFNoZSdzIGJlZW4gdXNpbmcgU3RlcGhlbiB0byBnZXQgYmFjayBhdCBtZS4gWW91IHNlZSwgdGhlcmUncyBiZWVuIHBhdHRlciBpbiBoZXJlIGFib3V0IGhlciBnb2luZyBvbiBhIGRhdGUgd2kgU3RlcGhlbiBhbmQgaXQgbWFkZSBtZSBhIHdlZSBiaXQgaW5zZWN1cmUuIEl0IGhhcHBlbnMuIFNvIGFzIHB1bmlzaG1lbnQgc2hlJ3MgYmVlbiBwbGF5aW5nIHdpIGhpbSBhbmQgY2hhdHRpbmcgd2kgaGltIGFuZCBjb21wbGV0ZWx5IGlnbm9yaW5nIG1lLiBUaGVuIHdoZW4gSSBhc2sgd2hhdHMgZ29pbmcgb24sIHNoZSBzYXlzIG5vdGhpbmcgYW5kIG5vdCB0byB3b3JyeSBhbmQgdGhhdCB3ZSdsbCBiZSBmaW5lIGFuZCB0aGUgc2hlJ3MgcmlnaHQgYmFjayBvbiB3aSBoaW0uIFRoaXMgaGFzIGNhdXNlIHRoZSBsYXN0IHdlZWsgb3Igc28gb2YgYW54aWV0eSBhdHRhY2tzIGFuZCBtZW50YWwgZnVja2luIGJyZWFrZG93bnMuIDMgdGltZXMgSSd2ZSB0cmllZCB0byB3YWxrIGF3YXkgZnJvbSBoZXIgYW5kIDMgdGltZXMgc2hlJ3MgcGhvbmVkIG1lLiBPbmNlIHRvIHRlbGwgbWUgSSdtIGFuIGlkaW90IGFuZCBJJ20gb3ZlciB0aGlua2luZyB0aGluZ3MuIE9uY2UgdG8gdGVsbCBtZSB0byBzdG9wIHBsYXlpbmcgZ2FtZXMgd2l0aCBmb2xrIHdpdGhvdXQgaGVyIChlc3BlY2lhbGx5IGJ1dHRlcnMpIGFuZCBvbmNlIGJlY2F1c2Ugb25lIG9mIHRoZXNlIGN1bnRzIHRvbGQgaGVyLiBJIHRvbGQgdGhlbSBhYm91dCB1cy4gSSdtIG5vIG1hZCB0aG91Z2guIFdoYXQgSSBhbSBtYWQgYWJvdXQgaXMgdGhlIHBob25lIGNhbGwgSSBnb3QgbGFzdCBuaWdodCBmcm9tIGhlci4gV2hlcmUgc2hlIHRvbGQgbWUgdGhhdCBJIHdhc24ndCB0byBzcGVhayB0byBhbnlvbmUgaW4gdGhlIGRpc2NvcmQuIFNoZSB0b2xkIG1lIHRoYXQsIGZvciBteSBvd24gd2VsbCBiZWluZyBJIG5lZWRlZCBhIGJyZWFrIGFuZCBmb3IgdGhhdCByZWFzb24gSSB3YXNuJ3QgdG8gcmVhY2ggb3V0IHRvIGFueW9uZSBhbmQgaWYgSSBkaWQsIHNoZSdkIGZpbmQgb3V0LiBJZiBJIHBsYXllZCBnYW1lcyB3aXRoIGFueW9uZSBzaGUnZCBmaW5kIG91dC4gSWYgSSBhcHBlYXJlZCBvZmZsaW5lIHdpdGggc29tZW9uZSwgc2hlJ2QgZmluZCBvdXQuIE1lYW53aGlsZSB0ZWxsaW5nIG1lIGl0J3MgY2F1c2UgZXZlcnlvbmUgY2FyZXMuIEkgY291bGRuYWUgcmVhbGx5IHdvcmsgb3V0IHdoYXQgd2FzIGhhcHBlbmluZy4=")
+DAZZY_RANT_2 = base64_to_utf8("U28gbmF0dXJhbGx5IEkganVtcCB1cCBhbmQgSSdtIG9uIHRoZSBkaXNjb3JkIHRvIGJ1dHRlcnMuIElnbm9yZWQuIFRoZW4gYSB0ZXh0IGNvbWVzIGluIGZyb20gaGVyIGFza2luZyB3aHkgaW0gbWVzc2FnaW5nIGhpbS4gVGhlbiBoZSBtZXNzYWdlcyBtZS4gVHVybnMgb3V0IGZvbGsgYXJlbid0IGlnbm9yaW5nIG1lIGNhdXNlIHRoZXkgY2FyZSBpdCdzIGJlY2F1c2Ugc2hlJ3MgdG9sZCBzb21lIGN1bnRzLCBJIGRvbid0IGtub3cgZXZlcnlvbmUsIHRoYXQgSSd2ZSBtYWRlIGFsbCB0aGlzIHNoaXRlIHVwLiBJIGRvbid0IGtub3cgaG93IHNoZSdzIG1hZGUgaXQgbG9vayBlaXRoZXIuIElmIHNoZSdzIG1hZGUgbWUgbG9vayBwYXRoZXRpYyBhbmQgbG9uZWx5IG9yIGlmIEkgbG9vayBsaWtlIGEgcHN5Y2hvIGJ1dCBJIGNhbiBhYnNvbHV0ZWx5IGFzc3VyZSB5b3VzIHNoZSdzIG1hbmlwdWxhdGluZyB0aGUgZnVja2luIGxvdCBvZiB1cyBhbmQgc2hlJ3MgbG92aW5nIGl0LiBJIGtub3cgbW9zdCBvZiB5b3VzIHByb2JhYmx5IGRvbid0IGNhcmUgYnV0IHRoaXMgaXMgd2hhdCdzIGhhcHBlbmluZyBiZWhpbmQgdGhlIHNjZW5lcy4gMiBmb2xrIEkgY29uc2lkZXIgbWF0ZXMgYW5kIGhhdmUga25vd24gZm9yIHllYXIsIGFsYmVpdCBJJ3ZlIG5ldmVyIG1ldCBidXR0ZXJzIGJ1dCBzdGlsbCwgaGF2ZSBiZWVuIHR1cm5lZCBhZ2FpbnN0IG1lIGNhdXNlIHRoZXkndmUgYmVlbiBjb252aW5jZWQgaW0gbHlpbmcgYWJvdXQgc29tZXRoaW5nLiBIYXZlIGEgbmljZSBkYXksIEkgZG9uJ3QgZXhwZWN0IGFueWN1bnQgdG8gdGFrZSBzaWRlcywgaW0gbm8gYSB3ZWFuIGJ1dCBpdCdkIGJlIG5pY2UgdG8gaGF2ZSBtb3JlIGZvbGsgaW4gdGhlIGtub3cgaW5zdGVhZCBvZiBoZXIgcHJldGVuZGluZyBpbiB0aGF0IGRpc2NvcmQgdGhhdCBldmVyeXRoaW5ncyBmaW5lIGFuZCBpbSBvdXRzaWRlIGZlZWxpbmcgbGlrZSBzaGl0ZSBjYXVzZSB3aWxreSdzIHRoZSBvbmx5IGN1bnQgdGhhdCB3YW50cyB0byB0YWxrIHRvIG1lLiBTaGUgbWlnaHQgZmxpcCB0aGlzLCB0ZWxsIHlvdXMgaW0gYXQgaXQgYW5kIGltIG1ha2luZyBzaGl0ZSB1cCBhZ2Fpbi4gQW5kIHlvdXMgbWlnaHQgYmVsaWV2ZSBoZXIgY2F1c2Ugc2hlJ3MgYSBsYXNzaWUgYnV0IEkgY2FuIGFzc3VyZSB5b3VzLCBzaGUncyBhIGJldHRlciBsaWFyIHRoYW4gSSBhbSBhbmQgSSBjb3VsZG5hZSBtYWtlIHNvbWV0aGluZyB0aGlzIGZ1Y2tpbiBjaGlsZGlzaCBhbmQgcGV0dHkgdXAgaWYgSSB0cmllZC4gSG9wZSB0byBzZWUgYWxsIG15IGdhbWluZyBwYWxzIG9uIFJhaW5ib3cgNiBub3cgdGhhdCBJJ20gZnJlZSBhbmQgYWxsb3dlZCB0byBwbGF5IGdhbWVzIG15c2VsZiBhZ2Fpbi4gR29kIGJsZXNzLg==")
+SERIOUS_RANT = base64_to_utf8("SGVsbG8gZm9sa3MuIFRoaXMgaXMgYSBzZXJpb3VzIHBvc3Qgc28gaSdtIGFza2luZyB5b3UgdG8gcGxlYXNlIHJlYWQgaXQuIFNvbWUgb2YgeW91cyB3aWxsbmFlIGtub3cgYnV0IGkgd2FzIHNlZWluZyBzb21lb25lIGZvciBhIHdlZSB3aGlsZSB0aGVyZS4gU2hlIHR1cm5lZCBvdXQgdG8gYmUgYSBwc3ljaG8gaW4gdGhlIGVuZCwgc29tZSBmb2xrIGtub3cgdGhlIGRldGFpbHMgb3RoZXJzIGRpbm5hZSBuZWVkIHRvLiBXZWxsIGluIHRoZSBsYXN0IGZldyBkYXlzIGkndmUgc3RhcnRlZCBnZXR0aW5nIGRlYXRoIHRocmVhdHMgZnJvbSByYW5kb20gY3VudHMuIEknbGwgbm8gZ28gaW50byB0b28gbXVjaCBkZXRhaWwsIGJ1dCB0aGUgd2VlIGNvdyBoYXMgYmVlbiB0ZWxsaW5nIGZvbGsgb25saW5lIHNvbWV3aGVyZSB0aGF0IGknbSBhIHBhZWRvLiBJIGRpbm5hZSBrbm93IHdoZXJlLCBpIGRpbm5hZSBrbm93IGhvdyBtYW55IGZvbGssIGkgbm8gbm90aGluZy4gSW0gd2FudGluZyBmb2xrIHRvIGtub3cgdGhpcyBjYXVzZSBpZiBhbnlvbmUgZ2V0cyBhIG1lc3NhZ2UsIGl0J3MgdW5saWtlbHkgYnV0IGlmIHlvdSBkbywgcGxlYXNlIHRlbGwgbWUsIHNjcmVlbnNob3QgaXQsIHJlcG9ydCBpdCBhbmQgdGhlbiBibG9jayB0aGVtLiBJJ20gdGFraW5nIGFueSBuZXcgaW5mb3JtYXRpb24gaSBnZXQgdG8gdGhlIHBvbGljZS4gVGhhbmtzIGZvciByZWFkaW5nLiBHb2QgYmxlc3M=")
+
+def base64_to_utf8(base64_message):
+       base64_bytes = base64_message.encode('utf-8')
+       message_bytes = base64.b64decode(base64_bytes)
+       message = message_bytes.decode('utf-8')
+
 # Emojis
-
-
 class Emoji:
     MIDDLE_FINGER = '🖕'
     REGIONAL_INDICATOR_H = '🇭'
