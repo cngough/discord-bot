@@ -16,7 +16,7 @@ from discord.ext import commands
 import config
 
 # Global variables
-intents = discord.Intents(messages=True, guilds=True)
+intents = discord.Intents(messages=True, guilds=True, members=True)
 ytdl = youtube_dl.YoutubeDL(config.YTDL_FORMAT_OPTIONS)
 youtube_dl.utils.bug_reports_message = lambda: ''
 client = commands.Bot(command_prefix='!', intents=intents)
