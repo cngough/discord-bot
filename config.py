@@ -9,6 +9,7 @@ VERSION = "1.1.6"
 CHANGELOG = """Version 1.1.6
         * Various code clean-up tasks
         * Renamed !commands to !help to stop overriding of Discord import 
+        * Attempt to make code PEP8 compliant
 
 Version 1.1.5
         * Resolved issues with bot changing channel
@@ -97,8 +98,9 @@ class Discord:
 
 
 def base64_to_utf8(base64_message):
-       base64_bytes = base64_message.encode('utf-8')
-       return base64.b64decode(base64_bytes).decode('utf-8')
+    base64_bytes = base64_message.encode('utf-8')
+    return base64.b64decode(base64_bytes).decode('utf-8')
+
 
 # Static text fields
 ON_READY = "No adventure is complete without Jingle hat and Jingle feet"
