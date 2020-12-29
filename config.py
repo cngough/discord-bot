@@ -89,7 +89,7 @@ GIPHY_API_KEY = os.getenv('GIPHY_API_KEY', '')
 
 # God dictionary configuration
 VOCABULARY = "vocab.dd"
-GOD_DICTIONARY = {num:line for num, line in enumerate(file(VOCABULARY))}
+GOD_DICTIONARY = {num:line for num, line in enumerate(file(VOCABULARY), 1)}
 
 # Discord channels
 class Discord:
