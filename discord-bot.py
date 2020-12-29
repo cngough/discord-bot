@@ -16,9 +16,10 @@ from discord.ext import commands
 import config
 
 # Global variables
+intents = discord.Intents(messages=True, guilds=True)
 ytdl = youtube_dl.YoutubeDL(config.YTDL_FORMAT_OPTIONS)
 youtube_dl.utils.bug_reports_message = lambda: ''
-client = commands.Bot(command_prefix='!')
+client = commands.Bot(command_prefix='!', intents)
 start_time = datetime.datetime.now()
 react_with_flip = None
 
@@ -67,17 +68,8 @@ async def changelog(ctx):
 
 @client.command()
 async def flip(ctx, *args):
-    member_to_check = ' '.join(args)
-    print ("MEMBER TO CHECK:")
-    print (member_to_check)
-    global react_with_flip
-    for guild in client.guilds:
-        for member in guild.members:
-            print(member) # or do whatever you wish with the member detail    
-    
+    member_to_check = ' '.join(args)   
     for member in ctx.message.guild.members:
-        print("GUILD MEMBERS:")
-        print(ctx.message.guild.members)
         if (member.name.lower() == member_to_check.lower() or (member.nick != None and member.nick.lower() == member_to_check.lower())):
             await ctx.send("That's right, flip {}".format(member.name))
             react_with_flip = member.name
