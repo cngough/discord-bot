@@ -68,8 +68,12 @@ async def changelog(ctx):
 @client.command()
 async def flip(ctx, *args):
     member_to_check = ' '.join(args)
+    print ("MEMBER TO CHECK:")
+    print (member_to_check)
     global react_with_flip
     for member in ctx.message.guild.members:
+        print("GUILD MEMBERS:")
+        print(ctx.message.guild.members)
         if (member.name.lower() == member_to_check.lower() or (member.nick != None and member.nick.lower() == member_to_check.lower())):
             await ctx.send("That's right, flip {}".format(member.name))
             react_with_flip = member.name
