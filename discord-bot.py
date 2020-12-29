@@ -19,7 +19,7 @@ import config
 intents = discord.Intents(messages=True, guilds=True)
 ytdl = youtube_dl.YoutubeDL(config.YTDL_FORMAT_OPTIONS)
 youtube_dl.utils.bug_reports_message = lambda: ''
-client = commands.Bot(command_prefix='!', intents)
+client = commands.Bot(command_prefix='!', intents=intents)
 start_time = datetime.datetime.now()
 react_with_flip = None
 
