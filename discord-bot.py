@@ -20,7 +20,7 @@ ytdl = youtube_dl.YoutubeDL(config.YTDL_FORMAT_OPTIONS)
 youtube_dl.utils.bug_reports_message = lambda: ''
 client = commands.Bot(command_prefix='!')
 start_time = datetime.datetime.now()
-react_with_fuck = None
+react_with_flip = None
 
 
 @client.event
@@ -34,8 +34,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if react_with_fuck != None:
-        if message.author.name == react_with_fuck:
+    if react_with_flip != None:
+        if message.author.name == react_with_flip:
             await message.add_reaction(emoji=config.Emoji.MIDDLE_FINGER)
     if 'horse' in message.content.lower():
         await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_H)
@@ -66,23 +66,23 @@ async def changelog(ctx):
 
 
 @client.command()
-async def fuck(ctx, *args):
+async def flip(ctx, *args):
     member_to_check = ' '.join(args)
-    global react_with_fuck
+    global react_with_flip
     for member in ctx.message.guild.members:
         if (member.name.lower() == member_to_check.lower() or (member.nick != None and member.nick.lower() == member_to_check.lower())):
-            await ctx.send("That's right, fuck {}".format(member.name))
-            react_with_fuck = member.name
+            await ctx.send("That's right, flip {}".format(member.name))
+            react_with_flip = member.name
             return
         if (member_to_check.lower() in member.name.lower() or (member.nick != None and member_to_check.lower() in member.nick.lower())):
             if member.nick == None:
-                await ctx.send("I'm guessing you meant say fuck {}. If you didn't - fuck them anyway!".format(member.name))
+                await ctx.send("I'm guessing you meant say flip {}. If you didn't - flip them anyway!".format(member.name))
             else:
-                await ctx.send("I'm guessing you meant say fuck {}/{}. If you didn't - fuck them anyway!".format(member.name, member.nick))
-            react_with_fuck = member.name
+                await ctx.send("I'm guessing you meant say flip {}/{}. If you didn't - flip them anyway!".format(member.name, member.nick))
+            react_with_flip = member.name
             return
-    await ctx.send("Who the fuck is {}?".format(member_to_check))
-    react_with_fuck = None
+    await ctx.send("Who the flip is {}?".format(member_to_check))
+    react_with_flip = None
 
 
 @client.command()
