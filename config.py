@@ -88,14 +88,8 @@ GIPHY_API_KEY = os.getenv('GIPHY_API_KEY', '')
 
 # God dictionary configuration
 VOCABULARY = "vocab.dd"
-GOD_DICTIONARY = {}
-# Loads the God dictionary into memory, currently this is 7569 words
-with open(VOCABULARY) as file:
-    i = 1
-    for line in file:
-        GOD_DICTIONARY[i] = line
-        i = i + 1
-              
+GOD_DICTIONARY = dict(for line in file(VOCABULARY))
+
 # Discord channels
 class Discord:
     DEV_TEST = 514244679907147776
