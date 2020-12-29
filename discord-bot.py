@@ -35,6 +35,10 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    print ("Message author name:")
+    print(message.author.name)
+    print ("react with flip:")
+    print (react_with_flip)
     if react_with_flip != None:
         if message.author.name == react_with_flip:
             await message.add_reaction(emoji=config.Emoji.MIDDLE_FINGER)
