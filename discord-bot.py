@@ -71,6 +71,10 @@ async def flip(ctx, *args):
     print ("MEMBER TO CHECK:")
     print (member_to_check)
     global react_with_flip
+    for guild in client.guilds:
+        for member in guild.members:
+            print(member) # or do whatever you wish with the member detail    
+    
     for member in ctx.message.guild.members:
         print("GUILD MEMBERS:")
         print(ctx.message.guild.members)
