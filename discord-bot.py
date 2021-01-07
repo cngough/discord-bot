@@ -32,13 +32,9 @@ async def on_ready():
     start_time = datetime.datetime.now()
     await channel.send("ChairsBot started at: {}".format(start_time.strftime('%d/%m/%Y, %H:%M:%S')))
 
-
+# Task - Why don't we add H O R S E into a list or enumeration and then iterate over that. Looks like it would be a bit neater? 
 @client.event
 async def on_message(message):
-    print ("Message author name:")
-    print(message.author.name)
-    print ("react with flip:")
-    print (react_with_flip)
     if react_with_flip != None:
         if message.author.name == react_with_flip:
             await message.add_reaction(emoji=config.Emoji.MIDDLE_FINGER)
@@ -48,9 +44,10 @@ async def on_message(message):
         await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_R)
         await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_S)
         await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_E)
+        # Might as well add a heart emoji here too, or a thumbs up
     await client.process_commands(message)
 
-
+# Task - We can probably make this a bit more pythonic, using a lot of variables where fewer might be clearer
 @client.command()
 async def uptime(ctx):
     global start_time
@@ -69,7 +66,7 @@ async def actions(ctx):
 async def changelog(ctx):
     await ctx.send(config.CHANGELOG)
 
-
+# Task - The logic on 78 isn't doing anything. Let's wrap this in tests. 
 @client.command()
 async def flip(ctx, *args):
     member_to_check = ' '.join(args)
@@ -80,6 +77,7 @@ async def flip(ctx, *args):
             react_with_flip = member.name
             return
         if (member_to_check.lower() in member.name.lower() or (member.nick != None and member_to_check.lower() in member.nick.lower())):
+            # Are we actually doing anything with this logic?
             if member.nick == None:
                 await ctx.send("I'm guessing you meant say flip {}. If you didn't - flip them anyway!".format(member.name))
             else:
@@ -89,7 +87,7 @@ async def flip(ctx, *args):
     await ctx.send("Who the flip is {}?".format(member_to_check))
     react_with_flip = None
 
-
+# Maybe for simple send() commands have a message sending method that takes args and sends them in order. async def sendToChannel(ctx, *args) and iterate over the list
 @client.command()
 async def dazzyboo(ctx):
     await ctx.send(config.DAZZY_RANT)
@@ -137,7 +135,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         filename = data['url'] if stream else ytdl.prepare_filename(data)
         return cls(discord.FFmpegPCMAudio(filename, **config.FFMPEG_OPTIONS), data=data)
 
-
+# Task - Remove timeout for testing. Maybe consider getting length of YouTube URL. 
 @client.command()
 async def stream(ctx, *, url):
     if url == None:
@@ -163,7 +161,7 @@ async def stream(ctx, *, url):
     await asyncio.sleep(10)
     await ctx.voice_client.disconnect()
 
-
+# Task - Parameterise/externalise MP3s. Return a list in chat tied to an enumeration of whitelisted songs?
 @client.command()
 async def music(ctx):
     await ctx.send("Attempting to join voice channel")
@@ -202,7 +200,7 @@ async def god(ctx):
         words = words + config.GOD_DICTIONARY.get(godSecure).replace("\n", " ")
     await ctx.send(words)
 
-
+# Task - Externalise folder location. Remove string replacements with regex
 async def check_kol():
     await client.wait_until_ready()
     print("KoL Poller has started")
@@ -221,6 +219,7 @@ async def check_kol():
         await asyncio.sleep(60)  # task runs every 60s
 
 
+# Task - Use Cron to configure this properly. clean up duplicate method calls (RGB). Externalise URL.
 async def daily_horse():
     await client.wait_until_ready()
     print("Daily Horse has started")
