@@ -233,12 +233,12 @@ async def daily_horse():
         response = await session.get("https://api.giphy.com/v1/gifs/random?tag=horse&api_key={}".format(config.GIPHY_API_KEY))
         data = json.loads(await response.text())
         embed.set_image(url=data['data']['images']['original']['url'])
-        await ctx.send("Enjoy your daily horse GIF - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
-        await ctx.send(embed=embed)
+        await channel.send("Enjoy your daily horse GIF - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
+        await channel.send(embed=embed)
         await session.close()
         await asyncio.sleep(86400)  # runs every 24 hours
 
-@client_command()
+@client.command()
 async def husky(ctx):
     red = random.SystemRandom().randint(1, 255)
     green = random.SystemRandom().randint(1, 255)
