@@ -29,32 +29,31 @@ async def on_ready():
     print(config.ON_READY)
     channel = client.get_channel(config.Discord.DEV_TEST)
     global start_time
-    start_time = datetime.datetime.now()
-    await channel.send("ChairsBot started at: {}".format(start_time.strftime('%d/%m/%Y, %H:%M:%S')))
+    start_time = start_time.strftime('%d/%m/%Y, %H:%M:%S')
+    await channel.send("ChairsBot started at: {}".format(start_time))
 
-# Task - Why don't we add H O R S E into a list or enumeration and then iterate over that. Looks like it would be a bit neater? 
 @client.event
 async def on_message(message):
     if react_with_flip != None:
         if message.author.name == react_with_flip:
             await message.add_reaction(emoji=config.Emoji.MIDDLE_FINGER)
     if 'horse' in message.content.lower():
-        await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_H)
-        await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_O)
-        await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_R)
-        await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_S)
-        await message.add_reaction(emoji=config.Emoji.REGIONAL_INDICATOR_E)
-        # Might as well add a heart emoji here too, or a thumbs up
+        horse_emoji_list = [config.Emoji.REGIONAL_INDICATOR_H, 
+                            config.Emoji.REGIONAL_INDICATOR_O,
+                            config.Emoji.REGIONAL_INDICATOR_R, 
+                            config.Emoji.REGIONAL_INDICATOR_S, 
+                            config.Emoji.REGIONAL_INDICATOR_E]
+        for val in enumerate(horse_emoji_list):
+            await message.add_reaction(emoji=val)
     await client.process_commands(message)
 
-# Task - We can probably make this a bit more pythonic, using a lot of variables where fewer might be clearer
+
 @client.command()
 async def uptime(ctx):
     global start_time
     diff = datetime.datetime.now() - start_time
-    time_diff = time.gmtime(diff.seconds)
-    time_print = time.strftime('%H:%M:%S', time_diff)
-    await ctx.send("I have been up for: {}".format(time_print))
+    time_formatted = time.strftime('%H:%M:%S', time.gmtime(diff.seconds))
+    await ctx.send("I have been up for: {}".format(time_formatted))
 
 
 @client.command()
@@ -66,7 +65,6 @@ async def actions(ctx):
 async def changelog(ctx):
     await ctx.send(config.CHANGELOG)
 
-# Task - The logic on 78 isn't doing anything. Let's wrap this in tests. 
 @client.command()
 async def flip(ctx, *args):
     member_to_check = ' '.join(args)
@@ -77,7 +75,7 @@ async def flip(ctx, *args):
             react_with_flip = member.name
             return
         if (member_to_check.lower() in member.name.lower() or (member.nick != None and member_to_check.lower() in member.nick.lower())):
-            # Are we actually doing anything with this logic?
+            # Task - Are we actually doing anything with this logic?
             if member.nick == None:
                 await ctx.send("I'm guessing you meant say flip {}. If you didn't - flip them anyway!".format(member.name))
             else:
@@ -87,7 +85,6 @@ async def flip(ctx, *args):
     await ctx.send("Who the flip is {}?".format(member_to_check))
     react_with_flip = None
 
-# Maybe for simple send() commands have a message sending method that takes args and sends them in order. async def sendToChannel(ctx, *args) and iterate over the list
 @client.command()
 async def dazzyboo(ctx):
     await ctx.send(config.DAZZY_RANT)
@@ -97,6 +94,7 @@ async def dazzyboo(ctx):
 @client.command()
 async def serious(ctx):
     await ctx.send(config.SERIOUS_RANT)
+
 
 @client.command()
 async def info(ctx, *args):
@@ -135,7 +133,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         filename = data['url'] if stream else ytdl.prepare_filename(data)
         return cls(discord.FFmpegPCMAudio(filename, **config.FFMPEG_OPTIONS), data=data)
 
-# Task - Remove timeout for testing. Maybe consider getting length of YouTube URL. 
+# Task - Remove timeout for testing. Maybe consider getting length of YouTube URL.
 @client.command()
 async def stream(ctx, *, url):
     if url == None:
@@ -220,34 +218,30 @@ async def check_kol():
 
 
 # Task - Use Cron to configure this properly. clean up duplicate method calls (RGB). Externalise URL.
-# Task - Add single session to benefit from connection pooling
 async def daily_horse():
     await client.wait_until_ready()
     print("Daily Horse has started")
     while(True):
         channel = client.get_channel(config.Discord.DAILY_HORSE)
-        session = aiohttp.ClientSession()
-        response = await session.get("https://api.giphy.com/v1/gifs/random?tag=horse&api_key={}".format(config.GIPHY_API_KEY))
-        data = json.loads(await response.text())
-        embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
+        data, embed = await giphy_request(config.GIPHY_API_HORSE_REQUEST)
         await channel.send("Enjoy your daily horse GIF - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
         await channel.send(embed=embed)
-        await session.close()
         await asyncio.sleep(86400)  # runs every 24 hours
 
-# Task - Add single session to benefit from connection pooling
-# Task - Split this out into a giphy call so there's no duplicate code
+
 @client.command()
 async def husky(ctx):
-    data, embed = await giphy_request('https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}'.format(config.GIPHY_API_KEY))
+    data, embed = await giphy_request(config.GIPHY_API_HUSKY_REQUEST)
     await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
     await ctx.send(embed=embed)
+
 
 async def giphy_request(url):
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url) as http_response:
             data = await http_response.json()
-            embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
+            embed = generate_embed().set_image(
+                url=data['data']['images']['original']['url'])
             return data, embed
 
 
@@ -258,6 +252,6 @@ def generate_embed():
     return discord.Embed(colour=discord.Colour.from_rgb(red, green, blue))
 
 
-#client.loop.create_task(daily_horse())
+client.loop.create_task(daily_horse())
 client.loop.create_task(check_kol())
 client.run(config.DISCORD_API_KEY)
