@@ -43,8 +43,8 @@ async def on_message(message):
                             config.Emoji.REGIONAL_INDICATOR_R, 
                             config.Emoji.REGIONAL_INDICATOR_S, 
                             config.Emoji.REGIONAL_INDICATOR_E]
-        for val in enumerate(horse_emoji_list):
-            await message.add_reaction(emoji=val)
+        for pos, emoji in enumerate(horse_emoji_list):
+            await message.add_reaction(emoji=emoji)
     await client.process_commands(message)
 
 
