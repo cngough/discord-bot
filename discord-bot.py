@@ -239,12 +239,17 @@ async def daily_horse():
 # Task - Split this out into a giphy call so there's no duplicate code
 @client.command()
 async def husky(ctx):
+    data, embed = await giphy_request('https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}'.format(config.GIPHY_API_KEY))
+    await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
+    await ctx.send(embed=embed)
+
+async def giphy_request(url):
     async with aiohttp.ClientSession() as cs:
-        async with cs.get('https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}'.format(config.GIPHY_API_KEY)) as http_response:
+        async with cs.get(url) as http_response:
             data = await http_response.json()
             embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
-            await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
-            await ctx.send(embed=embed)
+            return data, embed
+
 
 def generate_embed():
     red = random.SystemRandom().randint(1, 255)
