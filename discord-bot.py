@@ -240,7 +240,7 @@ async def daily_horse():
 async def husky(ctx):
     async with aiohttp.ClientSession() as cs:
         async with cs.get('https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}') as http_response:
-            data = json.loads(await http_response.text())
+            data = await http_response.json()
             embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
             await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
             await ctx.send(embed=embed)
