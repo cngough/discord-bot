@@ -226,14 +226,10 @@ async def daily_horse():
     print("Daily Horse has started")
     while(True):
         channel = client.get_channel(config.Discord.DAILY_HORSE)
-        red = random.SystemRandom().randint(1, 255)
-        green = random.SystemRandom().randint(1, 255)
-        blue = random.SystemRandom().randint(1, 255)
-        embed = discord.Embed(colour=discord.Colour.from_rgb(red, green, blue))
         session = aiohttp.ClientSession()
         response = await session.get("https://api.giphy.com/v1/gifs/random?tag=horse&api_key={}".format(config.GIPHY_API_KEY))
         data = json.loads(await response.text())
-        embed.set_image(url=data['data']['images']['original']['url'])
+        embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
         await channel.send("Enjoy your daily horse GIF - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
         await channel.send(embed=embed)
         await session.close()
@@ -242,13 +238,12 @@ async def daily_horse():
 # Task - Add single session to benefit from connection pooling
 @client.command()
 async def husky(ctx):
-    session = aiohttp.ClientSession()
-    response = await session.get("https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}".format(config.GIPHY_API_KEY))
-    data = json.loads(await response.text())
-    embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
-    await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
-    await ctx.send(embed=embed)
-    await session.close()
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get('https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}') as http_response:
+            data = json.loads(await http_response.text())
+            embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
+            await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
+            await ctx.send(embed=embed)
 
 def generate_embed():
     red = random.SystemRandom().randint(1, 255)
