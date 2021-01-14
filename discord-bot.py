@@ -245,7 +245,7 @@ async def husky(ctx):
     session = aiohttp.ClientSession()
     response = await session.get("https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}".format(config.GIPHY_API_KEY))
     data = json.loads(await response.text())
-    generate_embed().set_image(url=data['data']['images']['original']['url'])
+    embed = generate_embed().set_image(url=data['data']['images']['original']['url'])
     await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
     await ctx.send(embed=embed)
     await session.close()
