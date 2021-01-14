@@ -14,3 +14,16 @@ The following environment variables must be configured in the running environmen
 
 ## Running 
 The bot can be run by executing `python3 discord-bot.py` in a command line window.
+
+## Commands
+`!flip <user>` - flip the bird to anyone that annoys you  
+`!info <user>` - retrieves the profile information for a user  
+`!actions` - provides a list of all available commands  
+`!uptime` - shows how long the bot has been up for  
+`!dazzyboo` - makes the bot have a mental breakdown  
+`!serious` - prints the serious plea to the current channel  
+`!changelog` - the changes since the last version  
+`!music` - plays music in the voice channel the requesting user is in  
+`!stream <youtube id>` - streams audio from youtube to the voice channel the requesting user is in  
+`!husky` - retrieves a random husky from giphy  
+`!commands` - shows a list of enterable commands  
