@@ -5,8 +5,11 @@ import os
 import base64
 
 # Version and changelog information
-VERSION = "1.1.6"
-CHANGELOG = """Version 1.1.6
+VERSION = "1.1.7"
+CHANGELOG = """Version 1.1.7
+        * Added !husky command to retrieve husky gifs from Giphy
+
+Version 1.1.6
         * Various code clean-up tasks
         * Renamed !commands to !help to stop overriding of Discord import 
         * Attempt to make code PEP8 compliant
@@ -60,6 +63,7 @@ COMMANDS = """COMMANDS:
         * !changelog - the changes since the last version
         * !music - plays music in the channel you're in
         * !stream <id> - streams audio from youtube to the voice channel
+        * !husky - retrieves a random husky from giphy 
         * !commands - shows a list of enterable commands
 """
 

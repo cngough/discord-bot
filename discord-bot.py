@@ -98,7 +98,7 @@ async def dazzyboo(ctx):
 async def serious(ctx):
     await ctx.send(config.SERIOUS_RANT)
 
-
+@client.command()
 async def info(ctx, *args):
     member_to_check = ' '.join(args)
     for member in ctx.message.guild.members:
@@ -233,10 +233,25 @@ async def daily_horse():
         response = await session.get("https://api.giphy.com/v1/gifs/random?tag=horse&api_key={}".format(config.GIPHY_API_KEY))
         data = json.loads(await response.text())
         embed.set_image(url=data['data']['images']['original']['url'])
-        await channel.send("Enjoy your daily horse GIF - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
-        await channel.send(embed=embed)
+        await ctx.send("Enjoy your daily horse GIF - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
+        await ctx.send(embed=embed)
         await session.close()
         await asyncio.sleep(86400)  # runs every 24 hours
+
+@client_command()
+async def husky(ctx):
+    red = random.SystemRandom().randint(1, 255)
+    green = random.SystemRandom().randint(1, 255)
+    blue = random.SystemRandom().randint(1, 255)
+    embed = discord.Embed(colour=discord.Colour.from_rgb(red, green, blue))
+    session = aiohttp.ClientSession()
+    response = await session.get("https://api.giphy.com/v1/gifs/random?tag=husky&api_key={}".format(config.GIPHY_API_KEY))
+    data = json.loads(await response.text())
+    embed.set_image(url=data['data']['images']['original']['url'])
+    await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
+    await ctx.send(embed=embed)
+    await session.close()
+
 
 client.loop.create_task(daily_horse())
 client.loop.create_task(check_kol())
