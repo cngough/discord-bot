@@ -253,6 +253,6 @@ async def husky(ctx):
     await session.close()
 
 
-client.loop.create_task(daily_horse())
+#client.loop.create_task(daily_horse())
 client.loop.create_task(check_kol())
 client.run(config.DISCORD_API_KEY)
