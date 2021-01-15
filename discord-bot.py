@@ -238,11 +238,11 @@ async def husky(ctx):
 
 @client.command()
 async def thanks(ctx, *args):
-    thanks_message = ' '.join(args).lower()
-    if (thanks_message.startswith(("a","e","i","o","u"))):
+    thanks_message = ' '.join(args)
+    if (thanks_message.lower().startswith(("a","e","i","o","u"))):
         thanksified = "Th" + thanks_message
     else:
-        r = re.search("(.*?)([aeiou].*)", thanks_message)
+        r = re.search("(.*?)([aeiou].*)", thanks_message.lower())
         thanksified = "Th" + r.groups()[1]
 
     await ctx.send("Thanks {}. {}.".format(thanks_message, thanksified))
