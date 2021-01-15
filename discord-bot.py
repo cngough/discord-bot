@@ -243,7 +243,7 @@ async def thanks(ctx, *args):
     if (thanks_message.lower().startswith(("a","e","i","o","u"))):
         thanksified = "Th" + thanks_message
     else:
-        r = re.search("(.*?)([aeiou].*)", thanks_message.lower())
+        r = re.search("(.*?)([aeiouy].*)", thanks_message.lower())
         if (r is None):
             thanksified = "Th" + thanks_message
         else:
