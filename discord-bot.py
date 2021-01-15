@@ -7,6 +7,7 @@ import os
 import random
 import time
 from io import BytesIO
+import re
 
 import aiohttp
 import discord
@@ -235,6 +236,16 @@ async def husky(ctx):
     await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
     await ctx.send(embed=embed)
 
+@client.command()
+async def thanks(ctx, *args):
+    thanks_message = ' '.join(args).lower()
+    if (thanks_message.startswith("a","e","i","o","u")):
+        thanksified = "Th" + thanks_message
+    else:
+        r = re.search("(.*?)([aeiou].*)", thanks_message)
+        thanksified = "Th" + r.groups()[1]
+
+    await ctx.send("Thanks {}. {}.".format(thanks_message, thanksified))
 
 async def giphy_request(url):
     async with aiohttp.ClientSession() as cs:
