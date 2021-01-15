@@ -244,7 +244,7 @@ async def thanks(ctx, *args):
         thanksified = "Th" + thanks_message
     else:
         r = re.search("(.*?)([aeiou].*)", thanks_message.lower())
-        if (r.groups().len() == 0):
+        if (r.groups().len() == 1):
             thanksified = "Th" + thanks_message
         else:
             thanksified = "Th" + r.groups()[1]
