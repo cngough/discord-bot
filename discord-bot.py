@@ -236,6 +236,7 @@ async def husky(ctx):
     await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
     await ctx.send(embed=embed)
 
+# Task - handle vowel-less messages, or numbers.
 @client.command()
 async def thanks(ctx, *args):
     thanks_message = ' '.join(args)
@@ -243,7 +244,10 @@ async def thanks(ctx, *args):
         thanksified = "Th" + thanks_message
     else:
         r = re.search("(.*?)([aeiou].*)", thanks_message.lower())
-        thanksified = "Th" + r.groups()[1]
+        if (r.groups().len() == 0):
+            thanksified = "Th" + thanks_message
+        else:
+            thanksified = "Th" + r.groups()[1]
 
     await ctx.send("Thanks {}. {}.".format(thanks_message, thanksified))
 
