@@ -27,3 +27,4 @@ The bot can be run by executing `python3 discord-bot.py` in a command line windo
 `!stream <youtube id>` - streams audio from youtube to the voice channel the requesting user is in  
 `!husky` - retrieves a random husky from giphy  
 `!commands` - shows a list of enterable commands  
+`!thanks` - show your gratitude for a given item
