@@ -5,38 +5,38 @@ import os
 import base64
 
 # Version and changelog information
-VERSION = "1.1.7"
-CHANGELOG = """Version 1.1.7
+VERSION = "0.1.7"
+CHANGELOG = """Version 0.1.7
         * Added !husky command to retrieve husky gifs from Giphy
         * Added !thanks command 
         * Removed !actions command as this is redundant due to !help
 
-Version 1.1.6
+Version 0.1.6
         * Various code clean-up tasks
         * Renamed !commands to !help to stop overriding of Discord import 
         * Attempt to make code PEP8 compliant
 
-Version 1.1.5
+Version 0.1.5
         * Resolved issues with bot changing channel
 
-Version 1.1.4
+Version 0.1.4
         * Added ability to stream audio YouTube using !stream
         * Added mechanism to stream local mp3s
 
-Version 1.1.3
+Version 0.1.3
         * Added daily horse gif retrieval from Giphy
         * Added H O R S E emojis whenever horse is mentioned in a sentence
         * Added random colour to embedded horse
         * Added port of God from TempleOS converted crudely from HolyC to Python
 
-Version 1.1.2
+Version 0.1.2
         * Externalised token to environment variable
         * Updated uptime to be more human readable
 
-Version 1.1.1
+Version 0.1.1
         * Resolved polling issue with cron job notifications
 
-Version 1.1.0
+Version 0.1.0
         * Restored ChairsBot and rotated token
         * Updated discord.py to 1.4.1
         * Removed broken Twitch polling (API change)
@@ -50,7 +50,7 @@ Version 1.1.0
         * Renamed !getInfo command to !info
         * Improved !info formatting
 
-Version 1.0.0       
+Version 0.0.1       
         * First pass of info, flip, dazzyboo and serious commands
         * Integrated Twitch API poller"""
 
