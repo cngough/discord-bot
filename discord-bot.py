@@ -16,12 +16,18 @@ from discord.ext import commands
 
 import config
 
-# Global variables
+# Bot intents and client (Discord)
 intents = discord.Intents(messages=True, guilds=True, members=True)
+client = commands.Bot(command_prefix='!', intents=intents)
+
+# YouTube donwloader configuration and error handling
 ytdl = youtube_dl.YoutubeDL(config.YTDL_FORMAT_OPTIONS)
 youtube_dl.utils.bug_reports_message = lambda: ''
-client = commands.Bot(command_prefix='!', intents=intents)
+
+# When the current thread was initialised
 start_time = datetime.datetime.now()
+
+# Whether or not to append a message with a middle finger emoji
 react_with_flip = None
 
 
@@ -39,12 +45,7 @@ async def on_message(message):
         if message.author.name == react_with_flip:
             await message.add_reaction(emoji=config.Emoji.MIDDLE_FINGER)
     if 'horse' in message.content.lower():
-        horse_emoji_list = [config.Emoji.REGIONAL_INDICATOR_H, 
-                            config.Emoji.REGIONAL_INDICATOR_O,
-                            config.Emoji.REGIONAL_INDICATOR_R, 
-                            config.Emoji.REGIONAL_INDICATOR_S, 
-                            config.Emoji.REGIONAL_INDICATOR_E]
-        for pos, emoji in enumerate(horse_emoji_list):
+        for pos, emoji in enumerate(config.HORSE_EMOJI_LIST):
             await message.add_reaction(emoji=emoji)
     await client.process_commands(message)
 
@@ -71,12 +72,13 @@ async def flip(ctx, *args):
     member_to_check = ' '.join(args)
     global react_with_flip
     for member in ctx.message.guild.members:
+        # Match a full name or nickname
         if (member.name.lower() == member_to_check.lower() or (member.nick != None and member.nick.lower() == member_to_check.lower())):
             await ctx.send("That's right, flip {}".format(member.name))
             react_with_flip = member.name
             return
+        # Match a partial name or nickname
         if (member_to_check.lower() in member.name.lower() or (member.nick != None and member_to_check.lower() in member.nick.lower())):
-            # Task - Are we actually doing anything with this logic?
             if member.nick == None:
                 await ctx.send("I'm guessing you meant say flip {}. If you didn't - flip them anyway!".format(member.name))
             else:
@@ -96,21 +98,13 @@ async def dazzyboo(ctx):
 async def serious(ctx):
     await ctx.send(config.SERIOUS_RANT)
 
-
+# Task - update this to be able to handle nicknames, or fuzzy checking?
 @client.command()
 async def info(ctx, *args):
     member_to_check = ' '.join(args)
     for member in ctx.message.guild.members:
         if (member.name.lower() == member_to_check.lower()):
-            info_text = """User Information:
-            
-            * Name: {}, 
-            * ID: {} 
-            * Discriminator: {}, 
-            * Created at: {}, 
-            * Avatar {}""".format(member.name, member.id, member.discriminator, member.created_at, member.avatar_url)
-
-            await ctx.send(info_text)
+            await ctx.send(config.USER_INFO.format(member.name, member.id, member.discriminator, member.created_at, member.avatar_url))
 
 
 class YTDLSource(discord.PCMVolumeTransformer):
@@ -128,13 +122,12 @@ class YTDLSource(discord.PCMVolumeTransformer):
         data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
 
         if 'entries' in data:
-            # take first item from a playlist
             data = data['entries'][0]
 
         filename = data['url'] if stream else ytdl.prepare_filename(data)
         return cls(discord.FFmpegPCMAudio(filename, **config.FFMPEG_OPTIONS), data=data)
 
-# Task - Remove timeout for testing. Maybe consider getting length of YouTube URL.
+# Task - Remove timeout used for testing. Maybe consider getting length of YouTube URL.
 @client.command()
 async def stream(ctx, *, url):
     if url == None:
@@ -194,7 +187,7 @@ async def stop(ctx):
 async def god(ctx):
     words = ""
     for _ in range(30):
-        # Use os.urandom() to generate secure
+        # Systemrandom() uses os.urandom() to generate secure under the hood
         godSecure = random.SystemRandom().randint(1, 7569)  # 7569 lines in dictionary
         words = words + config.GOD_DICTIONARY.get(godSecure).replace("\n", " ")
     await ctx.send(words)
