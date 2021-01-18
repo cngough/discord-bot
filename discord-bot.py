@@ -58,11 +58,6 @@ async def uptime(ctx):
 
 
 @client.command()
-async def actions(ctx):
-    await ctx.send(config.COMMANDS)
-
-
-@client.command()
 async def changelog(ctx):
     await ctx.send(config.CHANGELOG)
 
