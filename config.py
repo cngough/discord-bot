@@ -9,6 +9,7 @@ VERSION = "1.1.7"
 CHANGELOG = """Version 1.1.7
         * Added !husky command to retrieve husky gifs from Giphy
         * Added !thanks command 
+        * Removed !actions command as this is redundant due to !help
 
 Version 1.1.6
         * Various code clean-up tasks
