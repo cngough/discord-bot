@@ -46,7 +46,7 @@ async def on_message(message):
         if message.author.name == react_with_flip:
             await message.add_reaction(emoji=config.Emoji.MIDDLE_FINGER)
     if 'horse' in message.content.lower():
-        for pos, emoji in enumerate(config.HORSE_EMOJI_LIST):
+        for _, emoji in enumerate(config.HORSE_EMOJI_LIST):
             await message.add_reaction(emoji=emoji)
     await client.process_commands(message)
 
@@ -96,6 +96,7 @@ async def dazzyboo(ctx):
 async def serious(ctx):
     await ctx.send(config.SERIOUS_RANT)
 
+
 # Task - update this to be able to handle nicknames, or fuzzy checking?
 @client.command()
 async def info(ctx, *args):
@@ -125,6 +126,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         filename = data['url'] if stream else ytdl.prepare_filename(data)
         return cls(discord.FFmpegPCMAudio(filename, **config.FFMPEG_OPTIONS), data=data)
 
+
 # Task - Remove timeout used for testing. Maybe consider getting length of YouTube URL.
 @client.command()
 async def stream(ctx, *, url):
@@ -151,9 +153,8 @@ async def stream(ctx, *, url):
     await asyncio.sleep(10)
     await ctx.voice_client.disconnect()
 
+
 # Task - Parameterise/externalise MP3s. Return a list in chat tied to an enumeration of whitelisted songs?
-
-
 @client.command()
 async def music(ctx):
     await ctx.send("Attempting to join voice channel")
@@ -192,9 +193,8 @@ async def god(ctx):
         words = words + config.GOD_DICTIONARY.get(godSecure).replace("\n", " ")
     await ctx.send(words)
 
+
 # Task - Externalise folder location. Remove string replacements with regex
-
-
 async def check_kol():
     await client.wait_until_ready()
     print("KoL Poller has started")
@@ -231,9 +231,8 @@ async def husky(ctx):
     await ctx.send("It's a husky! - {} brought to you by: {}".format(data['data']['title'], data['data']['username']))
     await ctx.send(embed=embed)
 
+
 # Task - handle vowel-less messages, or numbers.
-
-
 @client.command()
 async def thanks(ctx, *args):
     thanks_message = ' '.join(args)

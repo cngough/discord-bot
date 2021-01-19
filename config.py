@@ -54,6 +54,7 @@ Version 0.0.1
         * First pass of info, flip, dazzyboo and serious commands
         * Integrated Twitch API poller"""
 
+
 # List of COMMANDS
 COMMANDS = """COMMANDS:
         * !flip - flip the bird to anyone that annoys you
@@ -68,6 +69,7 @@ COMMANDS = """COMMANDS:
         * !husky - retrieves a random husky from giphy 
         * !commands - shows a list of enterable commands
 """
+
 
 # YouTube Downloader
 YTDL_FORMAT_OPTIONS = {
@@ -84,23 +86,25 @@ YTDL_FORMAT_OPTIONS = {
     'source_address': '0.0.0.0'
 }
 
+
 # FFmpeg configuration
 FFMPEG_OPTIONS = {
     'options': '-vn'
 }
 
+
 # Environment variables
 DISCORD_API_KEY = os.getenv('DISCORD_API_KEY', '')
 GIPHY_API_KEY = os.getenv('GIPHY_API_KEY', '')
+
 
 # God dictionary configuration
 VOCABULARY = "vocab.dd"
 with open(VOCABULARY) as vocabulary:
     GOD_DICTIONARY = dict(enumerate(vocabulary, 1))
 
+
 # Discord channels
-
-
 class Discord:
     DEV_TEST = 514244679907147776
     DAILY_HORSE = 791301208756584469
@@ -123,6 +127,7 @@ DAZZY_RANT = base64_to_utf8("SGVsbG8gZm9sa3MuIFNvcnJ5IGZvciB0aGUgdHlwb3MgbGFkcy4
 DAZZY_RANT_2 = base64_to_utf8("U28gbmF0dXJhbGx5IEkganVtcCB1cCBhbmQgSSdtIG9uIHRoZSBkaXNjb3JkIHRvIGJ1dHRlcnMuIElnbm9yZWQuIFRoZW4gYSB0ZXh0IGNvbWVzIGluIGZyb20gaGVyIGFza2luZyB3aHkgaW0gbWVzc2FnaW5nIGhpbS4gVGhlbiBoZSBtZXNzYWdlcyBtZS4gVHVybnMgb3V0IGZvbGsgYXJlbid0IGlnbm9yaW5nIG1lIGNhdXNlIHRoZXkgY2FyZSBpdCdzIGJlY2F1c2Ugc2hlJ3MgdG9sZCBzb21lIGN1bnRzLCBJIGRvbid0IGtub3cgZXZlcnlvbmUsIHRoYXQgSSd2ZSBtYWRlIGFsbCB0aGlzIHNoaXRlIHVwLiBJIGRvbid0IGtub3cgaG93IHNoZSdzIG1hZGUgaXQgbG9vayBlaXRoZXIuIElmIHNoZSdzIG1hZGUgbWUgbG9vayBwYXRoZXRpYyBhbmQgbG9uZWx5IG9yIGlmIEkgbG9vayBsaWtlIGEgcHN5Y2hvIGJ1dCBJIGNhbiBhYnNvbHV0ZWx5IGFzc3VyZSB5b3VzIHNoZSdzIG1hbmlwdWxhdGluZyB0aGUgZnVja2luIGxvdCBvZiB1cyBhbmQgc2hlJ3MgbG92aW5nIGl0LiBJIGtub3cgbW9zdCBvZiB5b3VzIHByb2JhYmx5IGRvbid0IGNhcmUgYnV0IHRoaXMgaXMgd2hhdCdzIGhhcHBlbmluZyBiZWhpbmQgdGhlIHNjZW5lcy4gMiBmb2xrIEkgY29uc2lkZXIgbWF0ZXMgYW5kIGhhdmUga25vd24gZm9yIHllYXIsIGFsYmVpdCBJJ3ZlIG5ldmVyIG1ldCBidXR0ZXJzIGJ1dCBzdGlsbCwgaGF2ZSBiZWVuIHR1cm5lZCBhZ2FpbnN0IG1lIGNhdXNlIHRoZXkndmUgYmVlbiBjb252aW5jZWQgaW0gbHlpbmcgYWJvdXQgc29tZXRoaW5nLiBIYXZlIGEgbmljZSBkYXksIEkgZG9uJ3QgZXhwZWN0IGFueWN1bnQgdG8gdGFrZSBzaWRlcywgaW0gbm8gYSB3ZWFuIGJ1dCBpdCdkIGJlIG5pY2UgdG8gaGF2ZSBtb3JlIGZvbGsgaW4gdGhlIGtub3cgaW5zdGVhZCBvZiBoZXIgcHJldGVuZGluZyBpbiB0aGF0IGRpc2NvcmQgdGhhdCBldmVyeXRoaW5ncyBmaW5lIGFuZCBpbSBvdXRzaWRlIGZlZWxpbmcgbGlrZSBzaGl0ZSBjYXVzZSB3aWxreSdzIHRoZSBvbmx5IGN1bnQgdGhhdCB3YW50cyB0byB0YWxrIHRvIG1lLiBTaGUgbWlnaHQgZmxpcCB0aGlzLCB0ZWxsIHlvdXMgaW0gYXQgaXQgYW5kIGltIG1ha2luZyBzaGl0ZSB1cCBhZ2Fpbi4gQW5kIHlvdXMgbWlnaHQgYmVsaWV2ZSBoZXIgY2F1c2Ugc2hlJ3MgYSBsYXNzaWUgYnV0IEkgY2FuIGFzc3VyZSB5b3VzLCBzaGUncyBhIGJldHRlciBsaWFyIHRoYW4gSSBhbSBhbmQgSSBjb3VsZG5hZSBtYWtlIHNvbWV0aGluZyB0aGlzIGZ1Y2tpbiBjaGlsZGlzaCBhbmQgcGV0dHkgdXAgaWYgSSB0cmllZC4gSG9wZSB0byBzZWUgYWxsIG15IGdhbWluZyBwYWxzIG9uIFJhaW5ib3cgNiBub3cgdGhhdCBJJ20gZnJlZSBhbmQgYWxsb3dlZCB0byBwbGF5IGdhbWVzIG15c2VsZiBhZ2Fpbi4gR29kIGJsZXNzLg==")
 SERIOUS_RANT = base64_to_utf8("SGVsbG8gZm9sa3MuIFRoaXMgaXMgYSBzZXJpb3VzIHBvc3Qgc28gaSdtIGFza2luZyB5b3UgdG8gcGxlYXNlIHJlYWQgaXQuIFNvbWUgb2YgeW91cyB3aWxsbmFlIGtub3cgYnV0IGkgd2FzIHNlZWluZyBzb21lb25lIGZvciBhIHdlZSB3aGlsZSB0aGVyZS4gU2hlIHR1cm5lZCBvdXQgdG8gYmUgYSBwc3ljaG8gaW4gdGhlIGVuZCwgc29tZSBmb2xrIGtub3cgdGhlIGRldGFpbHMgb3RoZXJzIGRpbm5hZSBuZWVkIHRvLiBXZWxsIGluIHRoZSBsYXN0IGZldyBkYXlzIGkndmUgc3RhcnRlZCBnZXR0aW5nIGRlYXRoIHRocmVhdHMgZnJvbSByYW5kb20gY3VudHMuIEknbGwgbm8gZ28gaW50byB0b28gbXVjaCBkZXRhaWwsIGJ1dCB0aGUgd2VlIGNvdyBoYXMgYmVlbiB0ZWxsaW5nIGZvbGsgb25saW5lIHNvbWV3aGVyZSB0aGF0IGknbSBhIHBhZWRvLiBJIGRpbm5hZSBrbm93IHdoZXJlLCBpIGRpbm5hZSBrbm93IGhvdyBtYW55IGZvbGssIGkgbm8gbm90aGluZy4gSW0gd2FudGluZyBmb2xrIHRvIGtub3cgdGhpcyBjYXVzZSBpZiBhbnlvbmUgZ2V0cyBhIG1lc3NhZ2UsIGl0J3MgdW5saWtlbHkgYnV0IGlmIHlvdSBkbywgcGxlYXNlIHRlbGwgbWUsIHNjcmVlbnNob3QgaXQsIHJlcG9ydCBpdCBhbmQgdGhlbiBibG9jayB0aGVtLiBJJ20gdGFraW5nIGFueSBuZXcgaW5mb3JtYXRpb24gaSBnZXQgdG8gdGhlIHBvbGljZS4gVGhhbmtzIGZvciByZWFkaW5nLiBHb2QgYmxlc3M=")
 
+
 # Templates
 USER_INFO = """User Information:
             
@@ -132,8 +137,8 @@ USER_INFO = """User Information:
             * Created at: {}, 
             * Avatar {}"""
 
-# Emojis
 
+# Emojis
 class Emoji:
     MIDDLE_FINGER = '🖕'
     REGIONAL_INDICATOR_H = '🇭'
@@ -141,6 +146,7 @@ class Emoji:
     REGIONAL_INDICATOR_R = '🇷'
     REGIONAL_INDICATOR_S = '🇸'
     REGIONAL_INDICATOR_E = '🇪'
+
 
 HORSE_EMOJI_LIST = [Emoji.REGIONAL_INDICATOR_H,
 Emoji.REGIONAL_INDICATOR_O,
