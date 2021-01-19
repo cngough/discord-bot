@@ -54,6 +54,8 @@ async def on_message(message):
 @client.command()
 async def uptime(ctx):
     global start_time
+    print ("START TIME:")
+    print (start_time)
     time_diff = datetime.datetime.now() - start_time
     time_print = time.strftime('%H:%M:%S', time.gmtime(time_diff.seconds))
     await ctx.send("I have been up for: {}".format(time_print))
