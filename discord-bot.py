@@ -157,6 +157,8 @@ async def stream(ctx, *, url):
 @client.command()
 async def numberone(ctx):
     await ctx.send("Attempting to join voice channel")
+    # Crude hook to check every 10 seconds whether the channel should be disconnected
+    client.loop.create_task(voice_channel_leave(ctx))
     if ctx.voice_client is not None:
         await ctx.voice_client.disconnect()
         await ctx.author.voice.channel.connect()
@@ -259,18 +261,20 @@ def generate_embed():
     blue = random.SystemRandom().randint(1, 255)
     return discord.Embed(colour=discord.Colour.from_rgb(red, green, blue))
 
+
 # Task - Use Cron to configure this properly. clean up duplicate method calls (RGB). Externalise URL.
 async def voice_channel_leave(ctx):
     await client.wait_until_ready()
     print("Voice channel leave has started")
-    while(True):
+    running = True
+    while(running):
         if ctx.author.voice:
             if ctx.author.voice.is_playing:
                 await ctx.author.voice.channel.disconnect()
+                running = False
         await asyncio.sleep(10)  # runs every 10 seconds
 
 
-client.loop.create_task(voice_channel_leave(ctx))
 client.loop.create_task(daily_horse())
 client.loop.create_task(check_kol())
 client.run(config.DISCORD_API_KEY)
