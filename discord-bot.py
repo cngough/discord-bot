@@ -155,7 +155,7 @@ async def stream(ctx, *, url):
 
 @client.command()
 async def simple(ctx):
-    await ctx.author.voice.channel.connect(timeout = 3, reconnect = true)
+    await ctx.author.voice.channel.connect(timeout = 3, reconnect = True)
     source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("1492101903.mp3"))
     ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
 
