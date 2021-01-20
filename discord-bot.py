@@ -153,6 +153,13 @@ async def stream(ctx, *, url):
     await ctx.voice_client.disconnect()
 
 
+@client.command()
+async def simple(ctx):
+    await ctx.author.voice.channel.connect()
+    source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://terrum.co.uk/uploads/1492101903.mp3"))
+    ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
+
+
 # Task - Parameterise/externalise MP3s. Return a list in chat tied to an enumeration of whitelisted songs?
 @client.command()
 async def music(ctx):
