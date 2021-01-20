@@ -176,7 +176,7 @@ async def numberone(ctx):
         "https://terrum.co.uk/uploads/1492101903.mp3"))
 
     ctx.voice_client.play(source, after=lambda e: print(
-        'Player error: %s' % e) if e else await None)
+        'Player error: %s' % e) if e else None)
 
 
 @client.command()
