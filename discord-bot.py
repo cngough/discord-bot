@@ -36,8 +36,7 @@ async def on_ready():
     print(config.ON_READY)
     channel = client.get_channel(config.Discord.DEV_TEST)
     global start_time
-    start_time = start_time.strftime('%d/%m/%Y, %H:%M:%S')
-    await channel.send("ChairsBot started at: {}".format(start_time))
+    await channel.send("ChairsBot started at: {}".format(start_time.strftime('%d/%m/%Y, %H:%M:%S')))
 
 
 @client.event
@@ -55,8 +54,7 @@ async def on_message(message):
 async def uptime(ctx):
     global start_time
     diff = datetime.datetime.now() - start_time
-    time_diff = time.gmtime(diff.seconds)
-    time_print = time.strftime("%H:%M:%S", time_diff)
+    time_print = time.strftime("%H:%M:%S", time.gmtime(diff.seconds))
     await ctx.send('I have been up for: ' + time_print)
 
 
