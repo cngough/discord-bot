@@ -5,8 +5,13 @@ import os
 import base64
 
 # Version and changelog information
-VERSION = "0.1.7"
-CHANGELOG = """Version 0.1.7
+VERSION = "0.1.8"
+CHANGELOG = """Version 0.1.8
+        * Updated Discord.py[voice] to 1.6.0
+        * Updated all Pip dependencies
+        * Renamed !music to !numberone
+
+Version 0.1.7
         * Added !husky command to retrieve husky gifs from Giphy
         * Added !thanks command 
         * Removed !actions command as this is redundant due to !help
@@ -64,7 +69,7 @@ COMMANDS = """COMMANDS:
         * !dazzyboo - makes the bot have a mental breakdown
         * !serious - prints the serious plea to the current channel
         * !changelog - the changes since the last version
-        * !music - plays music in the channel you're in
+        * !numberone - plays a song in the voice channel
         * !stream <id> - streams audio from youtube to the voice channel
         * !husky - retrieves a random husky from giphy 
         * !commands - shows a list of enterable commands
