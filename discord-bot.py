@@ -17,7 +17,7 @@ from discord.ext import commands
 import config
 
 # Bot intents and client (Discord)
-intents = discord.Intents(messages=True, guilds=True, members=True)
+intents = discord.Intents.all
 client = commands.Bot(command_prefix='!', intents=intents)
 
 # YouTube donwloader configuration and error handling
@@ -155,7 +155,7 @@ async def stream(ctx, *, url):
 
 @client.command()
 async def simple(ctx):
-    await ctx.author.voice.channel.connect()
+    await ctx.author.voice.channel.connect(timeout = 3, reconnect = true)
     source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("1492101903.mp3"))
     ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
 
