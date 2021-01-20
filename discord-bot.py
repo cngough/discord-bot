@@ -17,7 +17,7 @@ from discord.ext import commands
 import config
 
 # Bot intents and client (Discord)
-intents = discord.Intents.all
+intents = discord.Intents.all()
 client = commands.Bot(command_prefix='!', intents=intents)
 
 # YouTube donwloader configuration and error handling
