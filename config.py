@@ -7,8 +7,8 @@ import base64
 # Version and changelog information
 VERSION = "0.1.8"
 CHANGELOG = """Version 0.1.8
-        * Updated Discord.py[voice] to 1.6.0
-        * Updated all Pip dependencies
+        * Updated discord.py[voice] to 1.6.0
+        * Updated all pip dependencies
         * Renamed !music to !numberone
 
 Version 0.1.7
