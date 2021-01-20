@@ -174,7 +174,7 @@ async def numberone(ctx):
         "https://terrum.co.uk/uploads/1492101903.mp3"))
 
     ctx.voice_client.play(source, after=lambda e: print(
-        'Player error: %s' % e) if e else await ctx.voice_client.disconnect)
+        'Player error: %s' % e) if e else await None)
 
 
 @client.command()
@@ -259,7 +259,18 @@ def generate_embed():
     blue = random.SystemRandom().randint(1, 255)
     return discord.Embed(colour=discord.Colour.from_rgb(red, green, blue))
 
+# Task - Use Cron to configure this properly. clean up duplicate method calls (RGB). Externalise URL.
+async def voice_channel_leave(ctx):
+    await client.wait_until_ready()
+    print("Voice channel leave has started")
+    while(True):
+        if ctx.author.voice:
+            if ctx.author.voice.is_playing:
+                await ctx.author.voice.channel.disconnect()
+        await asyncio.sleep(10)  # runs every 10 seconds
 
+
+client.loop.create_task(voice_channel_leave(ctx))
 client.loop.create_task(daily_horse())
 client.loop.create_task(check_kol())
 client.run(config.DISCORD_API_KEY)
